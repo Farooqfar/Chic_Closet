@@ -17,11 +17,19 @@ export default function Card(data) {
           />
           <Button
             className="absolute w-32 z-100 opacity-0 border p-2 group-hover:opacity-100 hover:bg-black hover:text-white"
+            disabled={!!outofstock}
             text="shop now"
           />
         </div>
         <div className="w-full mt-5">
-          <h1 className="text-xl uppercase">{name}</h1>
+          <h1
+            className={`text-xl uppercase ${
+              sale ? "text-yellow-500 font-bold" : ""
+            }`}
+          >
+            {name}
+            {sale ? " (sale sale sale)" : ""}
+          </h1>
           <p
             className={`text-black/50 mt-1 ${sale ? "line-through " : ""}`}
           >{`Rs. ${price1} - ${price2}`}</p>
