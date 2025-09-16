@@ -57,6 +57,7 @@ export default function Home() {
   return (
     <>
       <main className="w-full">
+        {/*  Header  */}
         <header className="w-full flex justify-around items-center">
           <Image src="/logo.webp" alt="logo" width={150} height={150} />
 
@@ -73,6 +74,7 @@ export default function Home() {
             </div>
           </div>
         </header>
+        {/*  Banner  */}
         <main>
           <div>
             <Image
@@ -84,10 +86,13 @@ export default function Home() {
             />
           </div>
         </main>
+        {/*  new Arrival  */}
         <section className="w-full mt-10 mb-10 flex justify-center items-center flex-col">
+          {/*  H1  */}
           <h1 className="text-2xl uppercase text-center font-bold">
             new arrivals
           </h1>
+          {/*  Card  */}
           <div className="w-full h-auto grid grid-cols-4 justify-items-center gap-32  mt-8 pl-32 pr-32">
             {cards.map((item, index) => {
               return (
@@ -104,13 +109,18 @@ export default function Home() {
             })}
           </div>
         </section>
+        {/*  Collection  */}
         <section className="w-full mt-10 mb-10 flex justify-center items-center flex-col">
+          {/*  Collection Heading  */}
           <div className="w-full flex flex-col justify-center items-center">
+            {/*  H1  */}
             <h1 className="text-2xl uppercase text-center font-bold">
               collection
             </h1>
+            {/*  Para  */}
             <p className="text-black/50 uppercase">all collection</p>
           </div>
+          {/*  Collection Cards  */}
           <div className="w-full h-auto grid grid-cols-3 justify-items-center gap-32  mt-8 pl-32 pr-32">
             {fCards?.map((items, index) => {
               return (
@@ -135,10 +145,13 @@ export default function Home() {
             })}
           </div>
         </section>
+        {/*  Feature Collections  */}
         <section className="w-full mt-10 mb-10 flex justify-center items-center flex-col">
+          {/*  H1  */}
           <h1 className="text-2xl uppercase text-center font-bold">
             Feature Collection
           </h1>
+          {/*  Features Cards  */}
           <div className="w-full h-auto grid grid-cols-4 justify-items-center gap-32  mt-8 pl-32 pr-32">
             {cards.map((item, index) => {
               return (
