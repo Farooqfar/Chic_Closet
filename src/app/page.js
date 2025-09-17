@@ -1,9 +1,5 @@
 "use client";
 import Image from "next/image";
-import Nav from "./components/Nav";
-import { CiSearch } from "react-icons/ci";
-import { VscAccount } from "react-icons/vsc";
-import { CiShoppingCart } from "react-icons/ci";
 import Button from "./components/Button";
 import Card from "./components/Card";
 import { useState } from "react";
@@ -57,23 +53,6 @@ export default function Home() {
   return (
     <>
       <main className="w-full">
-        {/*  Header  */}
-        <header className="w-full flex justify-around items-center">
-          <Image src="/logo.webp" alt="logo" width={150} height={150} />
-
-          <Nav />
-          <div className="flex justify-center items-center gap-1">
-            <Button className="text-3xl" text={<CiSearch />} />
-            <Button className="text-3xl font-light" text={<VscAccount />} />
-            <div className="flex justify-center items-center">
-              <Button className="text-3xl " text={<CiShoppingCart />} />
-              <Button
-                className="bg-black text-white text-sm w-5 rounded-full"
-                text="1"
-              />
-            </div>
-          </div>
-        </header>
         {/*  Banner  */}
         <main>
           <div>
