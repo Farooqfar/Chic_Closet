@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Form from "../components/Form";
+import { api } from "../lib/axios";
 
 export default function Register() {
   const [submit, setSubmit] = useState({
@@ -10,21 +11,31 @@ export default function Register() {
     password: "",
     Confirm_password: "",
   });
+  const [loading, setLoading] = useState(false);
   const hanldeValue = (e) => {
     let { name, value } = e.target;
     setSubmit((prev) => ({ ...prev, [name]: value }));
   };
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    console.log(submit);
-    console.log("submit");
-    setSubmit({
-      Fname: "",
-      Lname: "",
-      email: "",
-      password: "",
-      Confirm_password: "",
-    });
+    try {
+      if (submit.password !== submit.Confirm_password) {
+        return;
+      }
+      let submit_Form = await api.post("/register", submit);
+      setSubmit({
+        Fname: "",
+        Lname: "",
+        email: "",
+        password: "",
+        Confirm_password: "",
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <>
@@ -33,6 +44,7 @@ export default function Register() {
           handleForm={handleForm}
           hanldeValue={hanldeValue}
           submit={submit}
+          loading={loading}
         />
       </section>
     </>

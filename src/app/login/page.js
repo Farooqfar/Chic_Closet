@@ -2,20 +2,28 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Form from "../components/Form";
-
+import { api } from "../lib/axios";
+import { useRouter } from "next/navigation";
 export default function Account() {
   const [submit, setSubmit] = useState({
     email: "",
     password: "",
   });
+  const router = useRouter();
   const hanldeValue = (e) => {
     let { name, value } = e.target;
     setSubmit((prev) => ({ ...prev, [name]: value }));
   };
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
-    console.log(submit);
-    console.log("submit");
+    try {
+      let res = await api.post("/login", submit);
+      if (res.data.success) {
+        router.push("/");
+      }
+    } catch (error) {
+      return error;
+    }
     setSubmit({
       email: "",
       password: "",

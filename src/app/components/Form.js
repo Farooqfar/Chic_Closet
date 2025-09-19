@@ -2,7 +2,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-export default function Form({ hanldeValue, handleForm, submit }) {
+export default function Form({ hanldeValue, handleForm, submit, loading }) {
   const pathname = usePathname();
   return (
     <>
@@ -22,6 +22,7 @@ export default function Form({ hanldeValue, handleForm, submit }) {
               value={submit.Fname}
               onChange={hanldeValue}
               className="w-full p-2 border outline-none"
+              required
             />
           </div>
         )}
@@ -34,6 +35,7 @@ export default function Form({ hanldeValue, handleForm, submit }) {
               value={submit.Lname}
               onChange={hanldeValue}
               className="w-full p-2 border outline-none"
+              required
             />
           </div>
         )}
@@ -45,6 +47,7 @@ export default function Form({ hanldeValue, handleForm, submit }) {
             value={submit.email}
             onChange={hanldeValue}
             className="w-full p-2 border outline-none"
+            required
           />
         </div>
         <div className="w-full">
@@ -53,6 +56,7 @@ export default function Form({ hanldeValue, handleForm, submit }) {
             type="password"
             name="password"
             className="w-full p-2 border outline-none"
+            required
             value={submit.password}
             onChange={hanldeValue}
           />
@@ -64,6 +68,7 @@ export default function Form({ hanldeValue, handleForm, submit }) {
               type="password"
               name="Confirm_password"
               className="w-full p-2 border outline-none"
+              required
               value={submit.Confirm_password}
               onChange={hanldeValue}
             />
@@ -73,15 +78,19 @@ export default function Form({ hanldeValue, handleForm, submit }) {
           <button
             className="p-2 bg-black text-white w-32 cursor-pointer hover:scale-95 transition-all duration-300 hover:rounded"
             type="submit"
+            disabled={loading}
           >
-            Login
+            {loading ? "Submit..." : "Login"}
           </button>
         ) : (
           <button
-            className="p-2 bg-black text-white w-32 cursor-pointer hover:scale-95 transition-all duration-300 hover:rounded"
+            className={`p-2 bg-black text-white w-32 cursor-pointer hover:scale-95 transition-all duration-300 hover:rounded ${
+              loading ? "bg-gray-400 " : ""
+            }`}
+            disabled={loading}
             type="submit"
           >
-            Register
+            {loading ? "Submit..." : "Register"}
           </button>
         )}
         {pathname === "/login" ? (
