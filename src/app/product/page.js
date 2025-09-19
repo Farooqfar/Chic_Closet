@@ -115,7 +115,7 @@ export default function Product() {
           </div>
           <div className="flex flex-col gap-1">
             <h1>Ask a Question</h1>
-            <h1>Categories: RAMADAN ESSENTIALS'25 - FESTIVE COLLECTION</h1>
+            <h1>Categories: RAMADAN ESSENTIALS 25 - FESTIVE COLLECTION</h1>
           </div>
         </section>
       </main>
