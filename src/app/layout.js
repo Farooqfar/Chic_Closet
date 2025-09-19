@@ -3,7 +3,8 @@ import "./globals.css";
 import Nav from "./components/Nav";
 import Button from "./components/Button";
 import { CiSearch } from "react-icons/ci";
-import { VscAccount } from "react-icons/vsc";
+import { MdAccountCircle } from "react-icons/md";
+
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
 export const metadata = {
@@ -25,7 +26,7 @@ export default function RootLayout({ children }) {
             <Link href="/login">
               <Button
                 className="text-3xl font-light cursor-pointer hover:scale-95 transition-all duration-200"
-                text={<VscAccount />}
+                text={<MdAccountCircle />}
               />
             </Link>
             <div className="flex justify-center items-center">
