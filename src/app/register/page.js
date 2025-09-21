@@ -2,8 +2,12 @@
 import React, { useState } from "react";
 import Form from "../components/Form";
 import { api } from "../lib/axios";
+import Alert from "../components/Alert";
+import { GiSkullCrossedBones } from "react-icons/gi";
 
 export default function Register() {
+  const [handleError, setHandleError] = useState(false);
+  const [backError, setBackError] = useState(false);
   const [submit, setSubmit] = useState({
     Fname: "",
     Lname: "",
@@ -21,7 +25,7 @@ export default function Register() {
     e.preventDefault();
     try {
       if (submit.password !== submit.Confirm_password) {
-        return;
+        setHandleError(true);
       }
       let submit_Form = await api.post("/register", submit);
       setSubmit({
@@ -32,7 +36,7 @@ export default function Register() {
         Confirm_password: "",
       });
     } catch (error) {
-      console.log(error);
+      setHandleError(true);
     } finally {
       setLoading(false);
     }
@@ -40,6 +44,16 @@ export default function Register() {
   return (
     <>
       <section className="w-[100%] h-auto flex items-center justify-center flex-col mt-14">
+        {handleError && (
+          <div className="w-[85%] flex gap-2 justify-between items-center  text-red-700 bg-red-200 border-red-400 border m-5 p-2">
+            <Alert message="Please check your Email and Password" />
+            <GiSkullCrossedBones
+              className="text-2xl hover:scale-90 transition-all duration-300 cursor-pointer"
+              onClick={() => setHandleError(false)}
+            />
+          </div>
+        )}
+
         <Form
           handleForm={handleForm}
           hanldeValue={hanldeValue}
