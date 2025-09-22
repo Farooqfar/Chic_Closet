@@ -13,7 +13,7 @@ export default function Header() {
   return (
     <header
       className={`w-full flex justify-around items-center ${
-        pathname === "/admin" ? "hidden" : ""
+        pathname.startsWith("/admin") ? "hidden" : ""
       }`}
     >
       <Image src="/logo.webp" alt="logo" width={150} height={150} />
