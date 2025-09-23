@@ -31,41 +31,44 @@ export default function Admin() {
           </Link>
         </div>
         <section className="w-full h-full  p-5">
-          <table>
+          <table className="w-full h-auto">
             <thead>
-              <tr>
-                <th>Id</th>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Edit</th>
-                <th>Delete</th>
+              <tr className="bg-gray-100">
+                <th className="p-3">Image</th>
+                <th className="p-3">Title</th>
+                <th className="p-3">Edit</th>
+                <th className="p-3">Delete</th>
               </tr>
             </thead>
-            <tbody>
-              {list.map((list) => {
+            <tbody className="w-full">
+              {list.map((list, index) => {
                 return (
-                  <tr>
-                    <td>
-                      <div className="w-32 h-full">
+                  <tr
+                    className={`${
+                      index % 2 === 0 ? "bg-gray-50" : ""
+                    } w-full text-center border`}
+                  >
+                    <td className=" flex justify-center items-center">
+                      <div className="w-28  h-full">
                         <Image
                           src={`/${list.image}`}
                           alt="not-found"
                           width={1000}
                           height={1000}
-                          className="w-full h-full"
+                          className="w-full h-24"
                         />
                       </div>
                     </td>
-                    <td>
+                    <td className="border">
                       <h1 className="text-2xl">{list.title}</h1>
                     </td>
-                    <td>
+                    <td className="border">
                       <Button
                         text="Edit"
                         className="text-white bg-gray-600 p-2 w-24 hover:scale-95 transition-all duration-300 cursor-pointer"
                       />
                     </td>
-                    <td>
+                    <td className="border">
                       <Button
                         text="Delete"
                         className="text-white bg-red-500 p-2 w-24 hover:scale-95 transition-all duration-300 cursor-pointer"

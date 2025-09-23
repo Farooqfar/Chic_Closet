@@ -2,7 +2,6 @@ import RegisterUser from "@/app/models/register";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 
 export async function POST(req) {
   const { email, password } = await req.json();
