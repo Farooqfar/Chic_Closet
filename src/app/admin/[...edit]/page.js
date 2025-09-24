@@ -1,59 +1,50 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { api } from "@/app/lib/axios";
 
 export default function Addpost() {
+  const param = useSearchParams();
+  const id = param.get("id");
   const router = useRouter();
-  const [image, setImage] = useState(null);
+
   const [data, setData] = useState({
+    id: id,
     title: "",
     description: "",
     price: 0,
     sale: false,
-    soldOut: false,
-    images: "",
+    sold: false,
   });
   const handleValue = (e) => {
-    const { name, value, type, checked, files } = e.target;
+    const { name, value, type, checked } = e.target;
 
-    if (type === "file") {
-      setImage(files[0]);
-    } else if (type === "checkbox") {
+    if (type === "checkbox") {
       setData((prev) => ({ ...prev, [name]: checked }));
     } else {
       setData((prev) => ({ ...prev, [name]: value }));
     }
   };
+  const get_id = async () => {
+    await api.post("/editPost", id);
+  };
+  useEffect(() => {
+    get_id();
+  });
   const handleForm = async (e) => {
     e.preventDefault();
-    try {
-      let form_data = new FormData();
-      form_data.append("file", image);
-      form_data.append("upload_preset", "Chic_Closet");
-      form_data.append("cloud_name", "dz4yyrjvk");
-      let res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dz4yyrjvk/image/upload",
-        form_data
-      );
-      let image_url = res.data.secure_url;
-      let finalData = { ...data, images: image_url };
+    let send_data = await api.put("/editPost", data);
 
-      let send_to_db = await api.post("addPost", finalData);
-    } catch (error) {
-      console.log(error);
-    }
     setData({
       title: "",
       description: "",
       price: 0,
       sale: false,
       soldOut: false,
-      images: "",
     });
-    setImage(null);
+
     router.push("/admin");
   };
   return (
@@ -124,16 +115,7 @@ export default function Addpost() {
               </span>
             </label>
           </div>
-          <div className="flex flex-col gap-1">
-            <span>Image</span>
-            <input
-              type="file"
-              name="image"
-              className="border p-2"
-              accept="image/*"
-              onChange={handleValue}
-            />
-          </div>
+
           <input
             type="submit"
             value="Add"

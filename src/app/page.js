@@ -2,36 +2,10 @@
 import Image from "next/image";
 import Button from "./components/Button";
 import Card from "./components/Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "./lib/axios";
 export default function Home() {
-  let [cards, setCards] = useState([
-    {
-      image: "collection1.webp",
-      name: "sylib",
-      price1: "10000",
-      price2: "14000",
-    },
-    {
-      image: "c2.webp",
-      name: "sylib",
-      price1: "10000",
-      price2: "14000",
-    },
-    {
-      image: "c3.webp",
-      name: "sylib",
-      price1: "10000",
-      price2: "14000",
-      outofstock: "sold out",
-    },
-    {
-      image: "c4.webp",
-      name: "sylib",
-      price1: "10000",
-      price2: "14000",
-      sale: "5000",
-    },
-  ]);
+  let [cards, setCards] = useState([]);
   let [fCards, setFcards] = useState([
     {
       image: "collection1.webp",
@@ -50,6 +24,16 @@ export default function Home() {
       button: "fasion",
     },
   ]);
+
+  const handelData = async () => {
+    let { data } = await api.get("/addPost");
+
+    setCards(data.data);
+    console.log(cards);
+  };
+  useEffect(() => {
+    handelData();
+  }, []);
   return (
     <>
       <main className="w-full">
@@ -78,10 +62,10 @@ export default function Home() {
                 <Card
                   key={index}
                   image={item.image}
-                  name={item.name}
-                  price1={item.price1}
-                  price2={item.price2}
-                  outofstock={item.outofstock}
+                  name={item.title}
+                  price1={item.price}
+                  price2={item.price}
+                  outofstock={item.sold}
                   sale={item.sale}
                 />
               );

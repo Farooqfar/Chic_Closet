@@ -9,7 +9,7 @@ export default function Card(data) {
       <div className="relative w-80 h-[680px] overflow-hidden">
         <div className="relative w-full h-[80%] flex flex-col justify-center items-center group overflow-hidden">
           <Image
-            src={`/${image}`}
+            src={`${image}`}
             alt="collection"
             width={1000}
             height={1000}
@@ -36,7 +36,7 @@ export default function Card(data) {
         </div>
         {outofstock ? (
           <p className="bg-red-600 shadow p-2 text-white rounded-full w-20  flex items-center justify-center h-20 absolute top-3 right-2">
-            {outofstock}
+            {`${outofstock ? "Sold" : ""}`}
           </p>
         ) : (
           ""

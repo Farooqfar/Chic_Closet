@@ -8,8 +8,8 @@ const postSchema = mongoose.Schema({
   title: String,
   description: String,
   price: Number,
-  sale: false,
-  sold: false,
+  sale: Boolean,
+  sold: Boolean,
   image: String,
 });
 
