@@ -2,6 +2,7 @@ import RegisterUser from "@/app/models/register";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import registerUser from "@/app/models/register";
 
 export async function POST(req) {
   const { email, password } = await req.json();
@@ -16,10 +17,7 @@ export async function POST(req) {
       );
     }
 
-    const compare_password = await bcrypt.compare(
-      password,
-      find_Email.password
-    );
+    await registerUser.comparePassword(password);
 
     if (!compare_password) {
       return NextResponse.json(

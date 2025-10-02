@@ -1,5 +1,6 @@
 import { connectDB } from "@/app/lib/register";
 import registerUser from "@/app/models/register";
+import { SignJWT } from "jose";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -20,7 +21,14 @@ export async function POST(req) {
       password,
     });
     await new_user.save();
-    console.log(new_user);
+
+    const secret = new TextEncoder().encode(process.env.secret);
+    const token = await new SignJWT({ user_id: new_user._id.toString() })
+      .setIssuedAt()
+      .setExpirationTime("1h")
+      .setProtectedHeader({ alg: "HS256" })
+      .sign(secret);
+
     return NextResponse.json({
       success: true,
       status: 200,
