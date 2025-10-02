@@ -1,23 +1,26 @@
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-export function middleware(request) {
+import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
+export async function middleware(request) {
   const token = request.cookies.get("token")?.value;
+  console.log("All cookies:", request.cookies.getAll());
+
   if (!token) {
-    // Example: redirect all /product paths to /login
+    console.log("No token found");
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
   try {
-    const compare = jwt.verify(token, process.env.JWT_KEY);
-    if (compare) {
-      return NextResponse.next();
-    }
+    const decoded = new TextEncoder().encode(process.env.JWT_KEY);
+    console.log("Decoded JWT:", decoded);
+    const { payload } = await jwtVerify(token, decoded);
+    return NextResponse.next();
   } catch (error) {
+    console.error("JWT Error:", error.message);
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }
 
 export const config = {
-  matcher: ["/product/:path*"], // <-- matches /product and all subpaths
+  matcher: ["/product/:path*"],
 };

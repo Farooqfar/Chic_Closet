@@ -4,6 +4,7 @@ import Button from "./components/Button";
 import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import { api } from "./lib/axios";
+import Link from "next/link";
 export default function Home() {
   let [cards, setCards] = useState([]);
   let [fCards, setFcards] = useState([
@@ -28,7 +29,7 @@ export default function Home() {
   const handelData = async () => {
     let { data } = await api.get("/addPost");
 
-    setCards(data.data);
+    setCards(data?.data || []);
     console.log(cards);
   };
   useEffect(() => {
@@ -59,15 +60,16 @@ export default function Home() {
           <div className="w-full h-auto grid grid-cols-4 justify-items-center gap-32  mt-8 pl-32 pr-32">
             {cards.map((item, index) => {
               return (
-                <Card
-                  key={index}
-                  image={item.image}
-                  name={item.title}
-                  price1={item.price}
-                  price2={item.price}
-                  outofstock={item.sold}
-                  sale={item.sale}
-                />
+                <Link href={`/product/${item._id}`} key={index}>
+                  <Card
+                    image={item.image}
+                    name={item.title}
+                    price1={item.price}
+                    price2={item.price}
+                    outofstock={item.sold}
+                    sale={item.sale}
+                  />
+                </Link>
               );
             })}
           </div>
@@ -116,7 +118,7 @@ export default function Home() {
           </h1>
           {/*  Features Cards  */}
           <div className="w-full h-auto grid grid-cols-4 justify-items-center gap-32  mt-8 pl-32 pr-32">
-            {cards.map((item, index) => {
+            {cards?.map((item, index) => {
               return (
                 <Card
                   key={index}

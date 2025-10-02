@@ -43,7 +43,7 @@ export default function Card(data) {
         )}
         {sale ? (
           <p className="bg-yellow-400/70 shadow p-2 text-white rounded-full w-20  flex items-center justify-center h-20 absolute top-3 right-2">
-            Rs.{sale}
+            {sale ? "SALE" : ""}
           </p>
         ) : (
           ""

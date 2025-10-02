@@ -18,6 +18,7 @@ export default function Addpost() {
     sale: false,
     sold: false,
   });
+
   const handleValue = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -28,23 +29,26 @@ export default function Addpost() {
     }
   };
   const get_id = async () => {
-    await api.post("/editPost", id);
+    let { data } = await api.get(`/editPost?id=${id}`);
+    console.log(data.data);
+    const doc = data.data;
+    setData((prev) => ({
+      ...prev,
+      id: doc._id ?? prev.id,
+      title: doc.title ?? "",
+      description: doc.description ?? "",
+      price: doc.price ?? 0,
+      sale: !!doc.sale,
+      sold: !!doc.sold,
+    }));
   };
   useEffect(() => {
     get_id();
-  });
+  }, []);
   const handleForm = async (e) => {
     e.preventDefault();
-    let send_data = await api.put("/editPost", data);
-
-    setData({
-      title: "",
-      description: "",
-      price: 0,
-      sale: false,
-      soldOut: false,
-    });
-
+    let res = await api.put("/editPost", data);
+    console.log(res.data);
     router.push("/admin");
   };
   return (
@@ -94,7 +98,6 @@ export default function Addpost() {
               <input
                 type="checkbox"
                 name="sale"
-                value="sale"
                 className="hidden peer"
                 onChange={handleValue}
               />
@@ -105,8 +108,7 @@ export default function Addpost() {
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                name="soldOut"
-                value="soldOut"
+                name="sold"
                 className="hidden peer"
                 onChange={handleValue}
               />

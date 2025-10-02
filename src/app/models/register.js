@@ -1,15 +1,53 @@
 import mongoose from "mongoose";
-mongoose.connect(process.env.Data_Base_Connection, {
-  dbName: "Colset",
-});
-const register_User_Schema = new mongoose.Schema({
-  Fname: { type: String, require: true },
-  Lname: { type: String, require: true },
-  email: { type: String, require: true, unique: true },
-  password: { type: String, require: true },
+import bcrypt from "bcrypt";
+const registerSchema = mongoose.Schema(
+  {
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+    },
+    isUserVerified: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
+
+registerSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  try {
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
-const RegisterUser =
-  mongoose.models.Users || mongoose.model("Users", register_User_Schema);
+registerSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
-export default RegisterUser;
+const registerUser =
+  mongoose.models.registerUser ||
+  mongoose.model("registerUser", registerSchema);
+
+export default registerUser;

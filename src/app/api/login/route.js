@@ -47,7 +47,8 @@ export async function POST(req) {
     res.cookies.set("token", token, {
       httpOnly: true,
       sameSite: "strict",
-      path: "/",
+      path: "/", // must be root so middleware can read it
+      maxAge: 60 * 60,
     });
     return res;
   } catch (error) {

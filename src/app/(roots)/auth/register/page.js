@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import Form from "../components/Form";
-import { api } from "../lib/axios";
-import Alert from "../components/Alert";
+import Form from "../../../components/Form";
+import { api } from "../../../lib/axios";
+import Alert from "../../../components/Alert";
 import { GiSkullCrossedBones } from "react-icons/gi";
 
 export default function Register() {
@@ -27,7 +27,7 @@ export default function Register() {
       if (submit.password !== submit.Confirm_password) {
         setHandleError(true);
       }
-      let submit_Form = await api.post("/register", submit);
+      let { data } = await api.post("/register", submit);
       setSubmit({
         Fname: "",
         Lname: "",
@@ -35,6 +35,7 @@ export default function Register() {
         password: "",
         Confirm_password: "",
       });
+      console.log(data);
     } catch (error) {
       setHandleError(true);
     } finally {

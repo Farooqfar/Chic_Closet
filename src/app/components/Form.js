@@ -95,7 +95,7 @@ export default function Form({ hanldeValue, handleForm, submit, loading }) {
         )}
         {pathname === "/login" ? (
           <Link
-            href="/register"
+            href="/auth/register"
             className="cursor-pointer hover:scale-110 transition-all duration-300  underline"
           >
             Register
